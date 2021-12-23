@@ -2,15 +2,11 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDiDA6Heyl5-vMdLzVg1cpoLEJW8YTldg0",
-  authDomain: "christmas-47315.firebaseapp.com",
-  projectId: "christmas-47315",
-  storageBucket: "christmas-47315.appspot.com",
-  messagingSenderId: "722198285636",
-  appId: "1:722198285636:web:5d023e318ceebfdb87db11",
-  measurementId: "G-FG23MREV37",
-  databaseURL:
-    "https://christmas-47315-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
