@@ -40,7 +40,7 @@ const AddForm = () => {
     },
   ];
 
-  const [deco, setDeco] = useState();
+  const [deco, setDeco] = useState("");
   const [top, setTop] = useState();
   const [left, setLeft] = useState();
   const titleRef = useRef();
@@ -55,12 +55,21 @@ const AddForm = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const id = Date.now();
+    if (titleRef.current.value === "") {
+      alert("제목을 입력해 주세요!");
+      return;
+    } else if (contentRef.current.value === "") {
+      alert("내용을 입력해 주세요!");
+      return;
+    } else if (deco === "") {
+      alert("데코를 선택해 주세요!");
+      return;
+    }
     set(
-      ref(db, "cards/" + id),
+      ref(db, "cards/" + Date.now()),
       dispatch(
         addCard({
-          id: id,
+          id: Date.now(),
           deco: deco,
           title: titleRef.current.value,
           content: contentRef.current.value,
@@ -69,7 +78,10 @@ const AddForm = () => {
         })
       )
     );
+    titleRef.current.value = "";
+    contentRef.current.value = "";
   };
+
   return (
     <Popup
       trigger={<AddBtn>+</AddBtn>}
