@@ -49,8 +49,8 @@ const AddForm = () => {
 
   const handleDeco = (name) => {
     setDeco(name);
-    setTop(`${randomNumber(0, 640)}px`);
-    setLeft(`${randomNumber(600, 1000)}px`);
+    setTop(`${randomNumber(0, 650)}px`);
+    setLeft(`${randomNumber(500, 1000)}px`);
   };
 
   const onSubmit = (event) => {
@@ -110,7 +110,7 @@ const AddBtn = styled.button`
   background-color: white;
   font-size: 24px;
   &:hover {
-    background-color: lightyellow;
+    background-color: lightgray;
   }
 `;
 
