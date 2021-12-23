@@ -77,7 +77,7 @@ const CardBox = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 300px;
-  padding: 30px 30px 60px 30px;
+  padding: 20px 30px 40px 30px;
   background-color: white;
   border-radius: 8px;
 `;
@@ -85,7 +85,7 @@ const CardBox = styled.div`
 const DeleteBtn = styled.button`
   position: absolute;
   bottom: 18px;
-  right: 20px;
+  right: 24px;
   width: 24px;
   height: 24px;
   border: none;
