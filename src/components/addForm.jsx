@@ -9,6 +9,8 @@ import sled from "../assets/imgs/sled.png";
 import socks from "../assets/imgs/socks.png";
 import { useDispatch } from "react-redux";
 import { addCard } from "../modules/cardSlice";
+import db from "../service/firebase";
+import { ref, set } from "firebase/database";
 
 const AddForm = () => {
   const decos = [
@@ -53,15 +55,19 @@ const AddForm = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    dispatch(
-      addCard({
-        id: Date.now(),
-        deco: deco,
-        title: titleRef.current.value,
-        content: contentRef.current.value,
-        top: top,
-        left: left,
-      })
+    const id = Date.now();
+    set(
+      ref(db, "cards/" + id),
+      dispatch(
+        addCard({
+          id: id,
+          deco: deco,
+          title: titleRef.current.value,
+          content: contentRef.current.value,
+          top: top,
+          left: left,
+        })
+      )
     );
   };
   return (

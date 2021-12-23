@@ -10,10 +10,14 @@ import socks from "../assets/imgs/socks.png";
 import bin from "../assets/imgs/bin.png";
 import { useDispatch } from "react-redux";
 import { deleteCard } from "../modules/cardSlice";
+import { ref, remove } from "firebase/database";
+import db from "../service/firebase";
 
-const CardItem = ({ id, deco, title, content, top, left }) => {
+const CardItem = ({ card }) => {
+  const { id, deco, title, content, top, left } = card;
   const dispatch = useDispatch();
   const onDelete = () => {
+    remove(ref(db, `cards/${card.id}`));
     dispatch(deleteCard({ id: id }));
   };
 
@@ -51,7 +55,7 @@ function getDeco(deco) {
     case "socks":
       return socks;
     default:
-      throw new Error(`unknown feeling:${deco}`);
+      throw new Error(`unknown deco:${deco}`);
   }
 }
 
