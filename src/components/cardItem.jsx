@@ -86,9 +86,8 @@ const DeleteBtn = styled.button`
   position: absolute;
   bottom: 18px;
   right: 24px;
-  width: 24px;
-  height: 24px;
   border: none;
+  outline: none;
   background: none;
   &:hover {
     transition: transform 100mx ease-in;
