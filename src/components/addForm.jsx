@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import Popup from "reactjs-popup";
 import cookie from "../assets/imgs/cookie.png";
 import gloves from "../assets/imgs/gloves.png";
 import hat from "../assets/imgs/hat.png";
@@ -40,28 +39,38 @@ const AddForm = () => {
     },
   ];
 
-  const [deco, setDeco] = useState("");
+  const [isModal, setIsModal] = useState(false);
+  const [selectedDeco, setSeletedDeco] = useState("");
   const [top, setTop] = useState();
   const [left, setLeft] = useState();
   const titleRef = useRef();
   const contentRef = useRef();
   const dispatch = useDispatch();
 
+  const handleModal = () => {
+    setIsModal(!isModal);
+  };
+
+  const handleBackground = (e) => {
+    if (e.target === e.currentTarget) {
+      setIsModal(!isModal);
+    }
+  };
+
   const handleDeco = (name) => {
-    setDeco(name);
+    setSeletedDeco(name);
     setTop(`${randomNumber(0, 650)}px`);
     setLeft(`${randomNumber(500, 1000)}px`);
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = () => {
     if (titleRef.current.value === "") {
       alert("제목을 입력해 주세요!");
       return;
     } else if (contentRef.current.value === "") {
       alert("내용을 입력해 주세요!");
       return;
-    } else if (deco === "") {
+    } else if (selectedDeco === "") {
       alert("데코를 선택해 주세요!");
       return;
     }
@@ -70,7 +79,7 @@ const AddForm = () => {
       dispatch(
         addCard({
           id: Date.now(),
-          deco: deco,
+          deco: selectedDeco,
           title: titleRef.current.value,
           content: contentRef.current.value,
           top: top,
@@ -83,26 +92,31 @@ const AddForm = () => {
   };
 
   return (
-    <Popup
-      trigger={<AddBtn>+</AddBtn>}
-      position="bottom right"
-      arrowStyle={{ color: "lightgray" }}
-    >
-      <PopupBox>
-        <IconBox>
-          {decos.map((deco) => (
-            <IconBtn key={deco.name} onClick={() => handleDeco(deco.name)}>
-              <IconImg src={deco.location} />
-            </IconBtn>
-          ))}
-        </IconBox>
-        <Label>Title</Label>
-        <InputTitle ref={titleRef} />
-        <Label>Content</Label>
-        <InputContent ref={contentRef} />
-        <SubmitBtn onClick={onSubmit}>Submit</SubmitBtn>
-      </PopupBox>
-    </Popup>
+    <>
+      <AddBtn onClick={handleModal}>+</AddBtn>
+      {isModal && (
+        <Background onClick={handleBackground}>
+          <PopupBox>
+            <IconBox>
+              {decos.map((deco) => (
+                <IconBtn
+                  key={deco.name}
+                  onClick={() => handleDeco(deco.name)}
+                  selectedDeco={selectedDeco === deco.name}
+                >
+                  <IconImg src={deco.location} />
+                </IconBtn>
+              ))}
+            </IconBox>
+            <Label>Title</Label>
+            <InputTitle ref={titleRef} />
+            <Label>Content</Label>
+            <InputContent ref={contentRef} />
+            <SubmitBtn onClick={onSubmit}>Submit</SubmitBtn>
+          </PopupBox>
+        </Background>
+      )}
+    </>
   );
 };
 
@@ -126,6 +140,21 @@ const AddBtn = styled.button`
   }
 `;
 
+const Background = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+`;
+
 const PopupBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -141,16 +170,15 @@ const IconBox = styled.div`
 
 const IconBtn = styled.button`
   margin: 10px;
+  padding: 10px;
   border: none;
   border-radius: 8px;
   &:hover {
     transition: transform 100mx ease-in;
     transform: scale(1.1);
   }
-  &:active {
-    outline: none !important;
-    box-shadow: 0 0 10px gray;
-  }
+  background-color: ${(props) =>
+    props.selectedDeco ? "white" : "transparent"};
 `;
 
 const IconImg = styled.img`
@@ -159,6 +187,7 @@ const IconImg = styled.img`
 `;
 
 const Label = styled.p`
+  font-size: 18px;
   margin: 0 10px;
 `;
 
@@ -171,7 +200,6 @@ const InputTitle = styled.input`
   padding: 2px 8px;
   &:focus {
     outline: none;
-    box-shadow: 0 0 10px gray;
   }
 `;
 
@@ -184,7 +212,6 @@ const InputContent = styled.textarea`
   padding: 8px 8px;
   &:focus {
     outline: none;
-    box-shadow: 0 0 10px gray;
   }
 `;
 
@@ -194,7 +221,7 @@ const SubmitBtn = styled.button`
   border: none;
   border-radius: 8px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   background-color: #a1a1a1;
   color: white;
   &:hover {

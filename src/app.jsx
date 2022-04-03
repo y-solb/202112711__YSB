@@ -16,7 +16,6 @@ function App() {
   useEffect(() => {
     onValue(ref(db, "cards/"), (snapshot) => {
       const datas = snapshot.val();
-
       const cardDatas = [];
       for (let id in datas) {
         cardDatas.push({ ...datas[id].payload, id });
@@ -38,13 +37,13 @@ function App() {
     </Container>
   );
 }
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  padding: 20px;
   background-color: #c48282;
 `;
 
