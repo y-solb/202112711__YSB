@@ -12,11 +12,22 @@ import { deleteCard } from "../modules/cardSlice";
 import { ref, remove } from "firebase/database";
 import db from "../service/firebase";
 
-const CardItem = ({ card }) => {
-  const { id, deco, title, content, top, left } = card;
+interface CardItemProps {
+  card: {
+    id: number;
+    deco: string;
+    title: string;
+    content: string;
+    top: string;
+    left: string;
+  };
+}
+
+const CardItem = (props: CardItemProps) => {
+  const { id, deco, title, content, top, left } = props.card;
   const dispatch = useDispatch();
   const onDelete = () => {
-    remove(ref(db, `cards/${card.id}`));
+    remove(ref(db, `cards/${id}`));
     dispatch(deleteCard({ id: id }));
   };
 
@@ -43,7 +54,7 @@ const CardItem = ({ card }) => {
   );
 };
 
-function getDeco(deco) {
+function getDeco(deco: string) {
   switch (deco) {
     case "cookie":
       return cookie;
@@ -62,7 +73,12 @@ function getDeco(deco) {
   }
 }
 
-const ItemBox = styled.div`
+interface ItemBoxProps {
+  top: string;
+  left: string;
+}
+
+const ItemBox = styled.div<ItemBoxProps>`
   display: flex;
   position: absolute;
   top: ${(props) => props.top};
@@ -72,6 +88,7 @@ const ItemBox = styled.div`
 const Deco = styled.img`
   width: 60px;
   height: 60px;
+  cursor: pointer;
   &:hover {
     transition: transform 100mx ease-in;
     transform: scale(1.1);

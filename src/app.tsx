@@ -1,17 +1,16 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import AddForm from "./components/addForm";
 import tree from "./assets/imgs/tree.png";
-import CardItem from "./components/cardItem";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCardList, setCard } from "./modules/cardSlice";
 import db from "./service/firebase";
 import { ref, onValue, off } from "firebase/database";
+import AddForm from "./components/addForm";
+import CardItem from "./components/cardItem";
 
 function App() {
   const dispatch = useDispatch();
   const cardList = useSelector(selectCardList);
-  const treeRef = useRef();
 
   useEffect(() => {
     onValue(ref(db, "cards/"), (snapshot) => {
@@ -28,7 +27,7 @@ function App() {
   return (
     <Container>
       <AddForm />
-      <TreeImg ref={treeRef}>
+      <TreeImg>
         {cardList &&
           Object.keys(cardList).map((key) => (
             <CardItem key={key} card={cardList[key]} />

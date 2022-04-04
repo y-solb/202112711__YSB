@@ -39,35 +39,35 @@ const AddForm = () => {
     },
   ];
 
-  const [isModal, setIsModal] = useState(false);
-  const [selectedDeco, setSeletedDeco] = useState("");
-  const [top, setTop] = useState();
-  const [left, setLeft] = useState();
-  const titleRef = useRef();
-  const contentRef = useRef();
+  const [isModal, setIsModal] = useState<Boolean>(false);
+  const [selectedDeco, setSeletedDeco] = useState<string>("");
+  const [top, setTop] = useState<string>("");
+  const [left, setLeft] = useState<string>("");
+  const titleRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useDispatch();
 
   const handleModal = () => {
     setIsModal(!isModal);
   };
 
-  const handleBackground = (e) => {
+  const handleBackground = (e: React.MouseEvent<HTMLElement>) => {
     if (e.target === e.currentTarget) {
       setIsModal(!isModal);
     }
   };
 
-  const handleDeco = (name) => {
+  const handleDeco = (name: string) => {
     setSeletedDeco(name);
     setTop(`${randomNumber(0, 650)}px`);
     setLeft(`${randomNumber(500, 1000)}px`);
   };
 
   const onSubmit = () => {
-    if (titleRef.current.value === "") {
+    if (titleRef.current?.value === "") {
       alert("제목을 입력해 주세요!");
       return;
-    } else if (contentRef.current.value === "") {
+    } else if (contentRef.current?.value === "") {
       alert("내용을 입력해 주세요!");
       return;
     } else if (selectedDeco === "") {
@@ -80,15 +80,17 @@ const AddForm = () => {
         addCard({
           id: Date.now(),
           deco: selectedDeco,
-          title: titleRef.current.value,
-          content: contentRef.current.value,
+          title: titleRef.current?.value,
+          content: contentRef.current?.value,
           top: top,
           left: left,
         })
       )
     );
-    titleRef.current.value = "";
-    contentRef.current.value = "";
+    if (titleRef.current !== null && contentRef.current != null) {
+      titleRef.current.value = "";
+      contentRef.current.value = "";
+    }
   };
 
   return (
@@ -102,7 +104,7 @@ const AddForm = () => {
                 <IconBtn
                   key={deco.name}
                   onClick={() => handleDeco(deco.name)}
-                  selectedDeco={selectedDeco === deco.name}
+                  isDeco={selectedDeco === deco.name}
                 >
                   <IconImg src={deco.location} />
                 </IconBtn>
@@ -120,8 +122,12 @@ const AddForm = () => {
   );
 };
 
-function randomNumber(min, max) {
+function randomNumber(min: number, max: number): number {
   return Math.random() * (max - min) + min;
+}
+
+interface IconBtnProps {
+  isDeco: boolean;
 }
 
 const AddBtn = styled.button`
@@ -168,7 +174,7 @@ const IconBox = styled.div`
   margin-bottom: 10px;
 `;
 
-const IconBtn = styled.button`
+const IconBtn = styled.button<IconBtnProps>`
   margin: 10px;
   padding: 10px;
   border: none;
@@ -177,8 +183,7 @@ const IconBtn = styled.button`
     transition: transform 100mx ease-in;
     transform: scale(1.1);
   }
-  background-color: ${(props) =>
-    props.selectedDeco ? "white" : "transparent"};
+  background-color: ${(props) => (props.isDeco ? "white" : "transparent")};
 `;
 
 const IconImg = styled.img`
