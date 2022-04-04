@@ -49,6 +49,7 @@ const AddForm = () => {
 
   const handleModal = () => {
     setIsModal(!isModal);
+    selectedDeco.length > 0 && setSeletedDeco("");
   };
 
   const handleBackground = (e: React.MouseEvent<HTMLElement>) => {
@@ -91,6 +92,7 @@ const AddForm = () => {
       titleRef.current.value = "";
       contentRef.current.value = "";
     }
+    setIsModal(false);
   };
 
   return (
