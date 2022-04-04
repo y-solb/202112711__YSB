@@ -1,10 +1,5 @@
 # 크리스마스 카드
 
-## Demo Link
-
-🔗https://merrychristmas-2021.netlify.app/
-
-
 편지를 작성하면 크리스마스 트리에 데코와 글이 추가됩니다.
 
 - Firebase Realtime Database로 추가, 읽기, 삭제 구현
@@ -12,7 +7,7 @@
 - 랜덤으로 데코 위치 생성
 - JavaScript에서 TypeScript로 리팩토링
 
-## Tech Stack
+### Tech Stack
 
 - TypeScipt
 - React
@@ -22,7 +17,11 @@
 - Firebase Realtime Database
 - Netlify
 
-## Screenshot
+### Demo Link
+
+🔗https://merrychristmas-2021.netlify.app/
+
+### Screenshot
 
 ![스크린샷 2022-04-04 오후 11 18 08](https://user-images.githubusercontent.com/59462108/161570530-dfa0c6d0-f57f-420f-a8d8-d6b3144a82f6.png)
 
