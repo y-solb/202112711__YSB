@@ -47,6 +47,7 @@ const Container = styled.div`
 `;
 
 const TreeImg = styled.div`
+  position: relative;
   height: 90%;
   width: 480px;
   background-size: contain;
