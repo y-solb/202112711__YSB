@@ -60,8 +60,8 @@ const AddForm = () => {
 
   const handleDeco = (name: string) => {
     setSeletedDeco(name);
-    setTop(`${randomNumber(0, 650)}px`);
-    setLeft(`${randomNumber(500, 1000)}px`);
+    setTop(`${randomNumber(0, 100)}%`);
+    setLeft(`${randomNumber(0, 100)}%`);
   };
 
   const onSubmit = () => {
