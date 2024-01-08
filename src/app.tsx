@@ -22,7 +22,7 @@ function App() {
       dispatch(setCard(cardDatas));
     });
     return () => off(ref(db, "cards/"));
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container>
